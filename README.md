@@ -1,4 +1,4 @@
-# newton_school
+# Newton_School
 
 In this Repo, I will build Multiple Django Projects.
 
