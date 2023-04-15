@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %} Dashboard {% endblock title %}
+
+{% block body %}
+<form method='POST' enctype='multipart/form-data' class='card' col>
+    {% csrf_token %}
+    <div class="mb-3">
+      <h1>Welcome {{ request.user.first_name }} {{ request.user.last_name }}</h1>
+        <h2>Add Receipe Here.</h2>
+      <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
+      <input type="text" name='receipe_name' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">Enter Receipe name Here.</div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+      <textarea name="receipe_description" id="exampleInputPassword1" cols="30" rows="10" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">UPload Receipe Image</label>
+        <input class="form-control" name = 'receipe_image' type="file" id="formFile">
+      </div>
+    <button type="submit" class="btn btn-success">Add Receipe</button>
+  </form>
+  <hr>
+  {% if receipes %}
+  <div class="mt-5">
+    <div class="mx-auto col-6">
+      <div class="mb-3">
+      <label for="search_receipe" class="form-label">Search Receipe</label>
+      <input type="text" name='receipe_name' class="form-control" id="search_receipe" aria-describedby="emailHelp">
+    </div>
+    <button type="submit" class='btn btn-primary'>Search</button>
+    </div>
+  </div>
+  <table class="table table-hover mt-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Receipe Name</th>
+        <th scope="col">Receipe Description</th>
+        <th scope="col">Image</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for receipe in receipes %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ receipe.receipe_name }}</td>
+        <td>{{ receipe.receipe_description }}</td>
+        <td><img src="/media/{{ receipe.receipe_image }}" alt="{{ receipe.receipe_name }}" height='100' width = '100'></td>
+        <td>
+          <a href="/delete_receipe/{{ receipe.id }}/" class='btn btn-sm btn-danger'>Delete</a> |
+          <a href="/update_receipe/{{ receipe.id }}/" class='btn btn-sm btn-info'>Update</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <hr>
+  <div class="alert alert-dark" role="alert">
+    No receipe Added Yet. Add New One.
+  </div>
+  {% endif %}
+
+{% endblock body %}

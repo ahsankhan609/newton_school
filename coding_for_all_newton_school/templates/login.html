@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} Login Here. {% endblock title %}
+
+{% block body %}
+<h2>Login Here</h2>
+{% if messages %}
+<hr>
+<div class="alert alert-success" role="alert">
+    {% for message in messages %}
+    <b>{{ message }}</b>
+    {% endfor %}
+  </div>
+<hr>
+{% endif %}
+<form method='POST'>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" name='email' class="form-control" required id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" name='password' class="form-control" required id="exampleInputPassword1">
+    </div>
+    <p>Don't Have Account. <a href="/register/">Register Here</a></p>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+{% endblock body %}
